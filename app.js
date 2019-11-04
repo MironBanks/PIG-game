@@ -29,7 +29,7 @@ document.getElementById('score-1').textContent = '0';
 document.getElementById('current-0').textContent = '0';
 document.getElementById('current-1').textContent = '0';
 
-// BTN ROLL FUNCTION - annonymus function
+// BTN ROLL FUNCTION
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
   // 1.random number
@@ -45,7 +45,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     roundScore += dice;
     document.querySelector('#current-' + activePlayer).textContent = roundScore;
   } else {
-    // Next player
+    // Next player function
     nextPlayer();
 
   }
@@ -59,11 +59,18 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     // Update the UI
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-    // NEXT PLAYER AFTER HOLD
-    nextPlayer();
-
     //Check if player won the game
+    if(scores[activePlayer] >= 20){
+      document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
+      document.querySelector('.dice').style.display = 'none';
+      document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+      document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+    } else {
+      // NEXT PLAYER AFTER HOLD
+      nextPlayer();
+    }
 });
+
 
 // NEXT PLAYER FUNCTION
 function nextPlayer (){
