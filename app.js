@@ -11,7 +11,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaing;
 
 init();
 
@@ -24,27 +24,30 @@ console.log(dice);
 // BTN ROLL FUNCTION
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
-  // 1.random number
-  dice = Math.floor(Math.random() * 6) + 1;
-  // 2. display the result
-  var diceDOM = document.querySelector('.dice');
-  diceDOM.style.display = 'block';
-  diceDOM.src = 'dice-' + dice + '.png'
+  if(gamePlaing) {
+    // 1.random number
+    dice = Math.floor(Math.random() * 6) + 1;
+    // 2. display the result
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
+    diceDOM.src = 'dice-' + dice + '.png'
 
-  // 3. Update the round score IF the rolled number was Not a 1
-  if (dice !== 1) {
-    // add score
-    roundScore += dice;
-    document.querySelector('#current-' + activePlayer).textContent = roundScore;
-  } else {
-    // Next player function
-    nextPlayer();
+    // 3. Update the round score IF the rolled number was Not a 1
+    if (dice !== 1) {
+      // add score
+      roundScore += dice;
+      document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    } else {
+      // Next player function
+      nextPlayer();
 
+    }
   }
 });
 
 // BTN HOLD FUNCTION
 document.querySelector('.btn-hold').addEventListener('click', function() {
+  if(gamePlaing) {
     //Add current score to global score
     scores[activePlayer] += roundScore;
 
@@ -57,10 +60,12 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
       document.querySelector('.dice').style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
       document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+      gamePlaing = false;
     } else {
       // NEXT PLAYER AFTER HOLD
       nextPlayer();
     }
+  }
 });
 
 
@@ -89,6 +94,7 @@ function init() {
   scores = [0, 0];
   activePlayer = 0;
   roundScore = 0;
+  gamePlaing = true;
 
   document.querySelector('.dice').style.display = 'none';
 
